@@ -7,6 +7,9 @@
 body{
     height: 100vh;
     background: linear-gradient(rgba(280,155,200,0.4),rgba(185,200,555,0.8));
+  
+    
+
 }
 .music-player{
     font-size: 16px;
