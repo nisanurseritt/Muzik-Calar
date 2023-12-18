@@ -13,7 +13,7 @@
 - Responsive tasarım
 </h2>
 
-<h2>ekran görüntüsü</h2>
+<h2>Ekran Görüntüsü</h2>
 
 ![](screen.gif)
 
