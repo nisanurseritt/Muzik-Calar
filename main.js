@@ -77,7 +77,26 @@ const songsList = [
         link:"müzikler/another-love.mp3",
         artist:"Tom Odell",
         image:"resimler/tomodell.jpg"
+    },
+    {
+        name:"Seni Dert Etmeler",
+        link:"müzikler/senidertetmeler.mp3",
+        artist:"Madrigal",
+        image:"resimler/madrigal.jpg"
+    },
+    {
+        name:"Firuze",
+        link:"müzikler/firuze.mp3",
+        artist:"Sezen Aksu",
+        image:"resimler/sezenaksu2.jpg"
+    },
+    {
+        name:"Kül",
+        link:"müzikler/kul.mp3",
+        artist:"Cem Adrian",
+        image:"resimler/cemadrian.png"
     }
+
 
 ]
 // zaman ayarlama
@@ -100,24 +119,28 @@ const songsList = [
 } 
 
 //  şarkı atama
-const setSong = (arrayIndex) =>{
-    console.log(arrayIndex)
-    if( loop =true && isShuffleActive == true){
-        arrayIndex = Math.floor(Math.random()*100)%5
+const setSong = (arrayIndex) => {
+   
+    if (loop == true && isShuffleActive == true) {
+        arrayIndex = Math.floor(Math.random() * songsList.length);
     }
+    
     let { name , link , artist , image } = songsList[arrayIndex]
     audio.src = link
     songName.innerHTML = name
     songArtist.innerHTML = artist
     songImage.src = image
-    audio.onloadedmetadata = () =>{
+
+    audio.onloadedmetadata = () => {
+
         maxDuration.innerText = timeFormatter(audio.duration)
     }
     playListContainer.classList.add("hide")
-    audio.play()
+    playAudio()
     
 }
-// sıradakini çalma
+// sıradaki şarkıyı çalma
+
 
 const nextSong = () => {
     if (loop) {
@@ -148,36 +171,36 @@ closeButton.addEventListener('click',() =>{
     playButton.classList.remove('hide')
  }
  setInterval(() =>{
-    currentTimeRef.innerHTML = timeFormatter(audio.currentTimeRef)
-    currentProgress.style.width = (audio.currentTime/audio.duration.toFixed(3))*100 + "%"
+    if(!isNaN(audio.duration) && audio.duration > 0){
+        currentTimeRef.innerHTML = timeFormatter(audio.currentTime)
+        currentProgress.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+    }
  }, 1000);
 
  
- progressBar.addEventListener("click",(event) =>{
+ progressBar.addEventListener("click", (event) => {
     let coordStart = progressBar.getBoundingClientRect().left
-
-    let coordEnd = event.clientX
-    let progress = (coordEnd-coordStart) / progressBar.offsetWidth
-    currentProgress.style.width = progressBar * 100 + "%"
-    audio.currentTime = progress * audio.duration
-    audio.play()
-    pauseButton.classList.remove('hide')
-    playButton.classList.add('hide')
-
- })
+    let coordEnd = event.clientX;
+    let progress = (coordEnd-coordStart) / progressBar.offsetWidth;
+    currentProgress.style.width = (progress * 100).toFixed(2) + "%";
+    audio.currentTime = progress * audio.duration;
+    audio.play();
+    pauseButton.classList.remove('hide');
+    playButton.classList.add('hide');
+ });
  
 const previousSong = () =>{
     if(index > 0){
         index-=1
     } 
-    else{
+    else {
         index = songsList.length - 1
     }
     setSong(index)
-    playAudio()
+    playAudio() 
 }
 
-repeatButton.addEventListener('click',() =>{
+repeatButton.addEventListener('click',() => {
     if(repeatButton.classList.contains('active')){
         repeatButton.classList.remove('active')
         audio.loop = false
@@ -201,15 +224,15 @@ shuffleButton.addEventListener('click',() =>{
         console.log('kariştirici acıldı')
     }
 } )
-const initializePlaylist = () =>{
+const initializePlaylist = () => {
     for(let i in songsList){
-        playListSongs.innerHTML += `<i class="playlistSong"
+        playListSongs.innerHTML += `<li class="playlistSong"
         onclick="setSong(${i})">
         <div class="playlist-image-container">
-         <img src="${songsList[i].image}"
+         <img src="${songsList[i].image}"/>
          </div>
-         <div class="playList-song-details">
-         <span id="playList-song-name">
+         <div class="playlist-song-details">
+         <span id="playlist-song-name">
          ${songsList[i].name}
          </span>
          <span id="playlist-song-artist-album">
@@ -236,18 +259,20 @@ audio.onended = () => {
     nextSong()
 }
 
-audio.addEventListener('timeupdate', ()=>{
-currentTimeRef.innerText = timeFormatter(audio.currentTimeRef)
-})
+audio.addEventListener("timeupdate", ()=>{
+    if(!isNaN(audio.currentTime) && !isNaN(audio.duration) && audio.duration > 0){
+        currentTimeRef.innerText = timeFormatter(audio.currentTime);
+    }
+});
 
 
 
 
-//ekran yuklenildiginde
+//ekrana yüklenildiğinde
 window.onload = () => {
     index = 0
     setSong(index)
-    //durdur ve sarki listesi olustur
+    
 
     pauseAudio()
     initializePlaylist()

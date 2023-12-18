@@ -29,12 +29,15 @@ img{
     border-radius: 1em;
     height: 250px;
     object-fit: contain;
+    border-radius: 10px;
 }
 #playlist{
     float: right;
     background-color: transparent;
     border: none;
 }
+
+
 .song-details{
     font-family: 'poppins',sans-serif;
     text-align: center;
@@ -109,6 +112,9 @@ img{
 
 #playlist-container{
     background-color:rgba(245, 223, 255, 0.9) ;
+    line-height: 150%;
+    margin-top: 5px;
+    margin-bottom: 5px;
     position: absolute;
     width: 95%;
     height: 95%;
@@ -118,6 +124,7 @@ img{
     box-shadow: 0 0 10px rgba(60, 95, 105, 0.8);
     overflow: auto;
     scroll-behavior: smooth;
+    
 }
 #close-button{
 background-color: transparent;
@@ -130,6 +137,7 @@ font-size: 20px;
 }
 ul{
    list-style-type: none;
+   
 
 }
 li{
@@ -137,21 +145,36 @@ li{
     align-items: center;
     margin: 1rem 0;
     cursor: pointer;
+  
+    
 }
 .playlist-song-details{
     margin: 1rem;
+   
 }
 .playlist-image-container{
     width: 4em;
+   
     margin-left: 10px;
+    position: relative;
+    top: -120px;
+  
 }
+
 
 .playlist-song-details > span{
  display: block;
+ position: relative;
+ top: -120px;
+ 
+ 
 
 }
 #playlist-song-artist-album{
     color: gray;
+    position: relative;
+    top: -120px;
+   
 }
 button.active i{
     color: thistle;
